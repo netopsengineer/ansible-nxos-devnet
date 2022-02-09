@@ -22,7 +22,7 @@
       cisco.nxos.nxos_config:
         diff_against: running
 
-    - name: delete specific ACLs and clean up
+    - name: delete the specific ACL we added to clean up after ourselves
       cisco.nxos.nxos_acls:
         state: deleted
         config:
