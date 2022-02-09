@@ -1,0 +1,3 @@
+# Exclude paths from linting
+exclude_paths:
+  - collections/

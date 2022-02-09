@@ -1,0 +1,32 @@
+---
+- hosts: all
+  gather_facts: False
+  tasks:
+    - name: diff of the running-config with respect to any changes made to the device configuration
+      cisco.nxos.nxos_config:
+        diff_against: running
+
+    - name: modify the acl on the device
+      cisco.nxos.nxos_config:
+        before: no ip access-list nxos_test
+        parents: ip access-list nxos_test
+        match: exact
+        lines:
+        - 10 permit ip 192.0.2.1/32 any log
+        - 20 permit ip 192.0.2.2/32 any log
+        - 30 permit ip 192.0.2.3/32 any log
+        - 40 permit ip 192.0.2.4/32 any log
+        - 50 permit ip 192.0.2.5/32 any log
+
+    - name: diff of the running-config with respect to any changes made to the device configuration
+      cisco.nxos.nxos_config:
+        diff_against: running
+
+    - name: delete specific ACLs and clean up
+      cisco.nxos.nxos_acls:
+        state: deleted
+        config:
+        - afi: ipv4
+          acls:
+          - name: nxos_test
+...
